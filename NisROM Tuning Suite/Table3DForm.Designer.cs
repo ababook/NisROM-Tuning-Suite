@@ -1,6 +1,6 @@
 ﻿namespace NisROM_Tuning_Suite
 {
-    partial class Form1
+    partial class Table3DForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Table3DForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(1320, 726);
+            this.Name = "Table3DForm";
+            this.Text = "Table3DForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Table3DForm_FormClosing);
+            this.Load += new System.EventHandler(this.Table3DForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Table3DForm_KeyDown);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-

@@ -45,14 +45,106 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="ConfigureForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ConfigureForm.Designer.cs">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\KMultiplierView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\KMultiplierView.Designer.cs">
+      <DependentUpon>KMultiplierView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LimitersView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LimitersView.Designer.cs">
+      <DependentUpon>LimitersView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StaticYAxisView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StaticYAxisView.Designer.cs">
+      <DependentUpon>StaticYAxisView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Table3DView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Table3DView.Designer.cs">
+      <DependentUpon>Table3DView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DumpOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DumpOptionsForm.Designer.cs">
+      <DependentUpon>DumpOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DumpOrFlashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DumpOrFlashForm.Designer.cs">
+      <DependentUpon>DumpOrFlashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KMultiplierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KMultiplierForm.Designer.cs">
+      <DependentUpon>KMultiplierForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RomDefinition.cs" />
+    <Compile Include="RomFile.cs" />
+    <Compile Include="RomTable.cs" />
+    <Compile Include="RomTableAxis.cs" />
+    <Compile Include="RomTableScaling.cs" />
+    <Compile Include="Table2DForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Table2DForm.Designer.cs">
+      <DependentUpon>Table2DForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Table3DForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Table3DForm.Designer.cs">
+      <DependentUpon>Table3DForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ConfigureForm.resx">
+      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\KMultiplierView.resx">
+      <DependentUpon>KMultiplierView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LimitersView.resx">
+      <DependentUpon>LimitersView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StaticYAxisView.resx">
+      <DependentUpon>StaticYAxisView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Table3DView.resx">
+      <DependentUpon>Table3DView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DumpOptionsForm.resx">
+      <DependentUpon>DumpOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DumpOrFlashForm.resx">
+      <DependentUpon>DumpOrFlashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KMultiplierForm.resx">
+      <DependentUpon>KMultiplierForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +154,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Table2DForm.resx">
+      <DependentUpon>Table2DForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Table3DForm.resx">
+      <DependentUpon>Table3DForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

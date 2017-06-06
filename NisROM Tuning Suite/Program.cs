@@ -16,7 +16,7 @@ namespace NisROM_Tuning_Suite
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm() { Text = "NisROM Tuning Suite" });
         }
     }
 }
