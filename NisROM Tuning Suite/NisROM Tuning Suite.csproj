@@ -87,6 +87,12 @@
     <Compile Include="DumpOrFlashForm.Designer.cs">
       <DependentUpon>DumpOrFlashForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FlashOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlashOptionsForm.Designer.cs">
+      <DependentUpon>FlashOptionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="KMultiplierForm.cs">
       <SubType>Form</SubType>
     </Compile>
