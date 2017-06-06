@@ -14,9 +14,8 @@ namespace NisROM_Tuning_Suite
 {
     public partial class MainForm : Form
     {
-
-        private List<string> defCategories = new List<string> { "Ignition Timing", "Variable Cam Timing", "Fuel", "Airflow", "Limiters", "Electronic Throttle", "Misc", };
         public static RomDefinition romDefinition;
+        private List<string> definitionCategories;
         public static RomFile ecuRom;
         public static string checksumXOR;
         public static string checksumSum;
@@ -34,10 +33,20 @@ namespace NisROM_Tuning_Suite
             romDefinition = definition;
             ecuRom = rom;
             List<TreeNode> categoryNodes = new List<TreeNode>();
-            foreach(string category in defCategories)
+            definitionCategories = new List<string>();
+            foreach (XmlNode xmlNode in definition.FullDefinition.ChildNodes)
             {
-                TreeNode node = new TreeNode(category);
-                categoryNodes.Add(node);
+                foreach (XmlNode innerNode in xmlNode)
+                {
+                    if (innerNode.Name == "table")
+                    {
+                        if (!definitionCategories.Contains(GetAttributeValue(innerNode, "category")))
+                        {
+                            definitionCategories.Add(GetAttributeValue(innerNode, "category"));
+                            categoryNodes.Add(new TreeNode(GetAttributeValue(innerNode, "category")));
+                        }
+                    }
+                }
             }
             foreach(XmlNode xNode in definition.FullDefinition.ChildNodes)
             {
@@ -105,10 +114,14 @@ namespace NisROM_Tuning_Suite
         private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             TreeNode selectedTable = treeView1.SelectedNode;
-            if (defCategories.Contains(selectedTable.Text))
+            try
             {
-                return;
+                if (definitionCategories.Contains(selectedTable.Text))
+                {
+                    return;
+                }
             }
+            catch { }
             XmlNode table = GetNode(romDefinition.FullDefinition, "table", selectedTable.Text);
             RomTable romTable = new RomTable
             {
