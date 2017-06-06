@@ -35,7 +35,9 @@ namespace NisROM_Tuning_Suite
 
         private void btnFlash_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Flashing currently unavailable, check back soon");
+            FlashOptionsForm flashForm = new FlashOptionsForm();
+            flashForm.Show();
+            this.Close();
         }
     }
 }

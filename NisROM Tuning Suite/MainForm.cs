@@ -18,6 +18,8 @@ namespace NisROM_Tuning_Suite
         private List<string> defCategories = new List<string> { "Ignition Timing", "Variable Cam Timing", "Fuel", "Airflow", "Limiters", "Electronic Throttle", "Misc", };
         public static RomDefinition romDefinition;
         public static RomFile ecuRom;
+        public static string checksumXOR;
+        public static string checksumSum;
 
         public MainForm()
         {
@@ -51,6 +53,11 @@ namespace NisROM_Tuning_Suite
                                 category.Nodes.Add(new TreeNode(innerNode.Attributes["name"].Value));
                             }
                         }
+                    }
+                    if(innerNode.Name == "checksum")
+                    {
+                        checksumSum = GetAttributeValue(innerNode, "sumloc");
+                        checksumXOR = GetAttributeValue(innerNode, "xorloc");
                     }
                 }
             }

@@ -124,6 +124,7 @@
     <Compile Include="Table3DForm.Designer.cs">
       <DependentUpon>Table3DForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\DataFunctions.cs" />
     <EmbeddedResource Include="ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DumpOrFlashForm.resx">
       <DependentUpon>DumpOrFlashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlashOptionsForm.resx">
+      <DependentUpon>FlashOptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KMultiplierForm.resx">
       <DependentUpon>KMultiplierForm.cs</DependentUpon>

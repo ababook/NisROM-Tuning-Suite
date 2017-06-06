@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using NisROM_Tuning_Suite.Utilities;
+
 namespace NisROM_Tuning_Suite
 {
     public partial class FlashOptionsForm : Form
@@ -38,6 +40,40 @@ namespace NisROM_Tuning_Suite
                 }
             }
             return crc;
+        }
+
+        private void FixChecksum()
+        {
+            byte[] data = MainForm.ecuRom.RomBytes;
+            uint sum = 0;
+            uint xorsum = 0;
+            int startOffset = 0;
+            bool hrStyle = false;
+            uint check1 = DataFunctions.GetUInt(data, 0x20008);
+            uint check2 = DataFunctions.GetUInt(data, 0x20010);
+            if ((data.Length == 0x100000) && (check1 == 0xFFFF7FFC) && (check2 == check1)) hrStyle = true;
+            if ((data.Length == 0x180000) && (check1 == 0xFFFF7FFC) && (check2 == check1)) hrStyle = true;
+            if (hrStyle) startOffset = 0x8204;
+            uint xorAddress = Convert.ToUInt32(MainForm.checksumXOR, 16);
+            uint sumAddress = Convert.ToUInt32(MainForm.checksumSum, 16);
+            for (int count = startOffset; count < data.Length; count += 4)
+            {
+                if (count == xorAddress) continue;
+                if (count == sumAddress) continue;
+                if ((count == 0x20000) && hrStyle) continue;
+                uint value = DataFunctions.GetUInt(data, count);
+                sum += value;
+                xorsum ^= value;
+            }
+            MessageBox.Show(xorsum.ToString());
+            MessageBox.Show(sum.ToString());
+            DataFunctions.WriteToArray(data, (int)xorAddress, xorsum);
+            DataFunctions.WriteToArray(data, (int)sumAddress, sum);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FixChecksum();
         }
     }
 }
