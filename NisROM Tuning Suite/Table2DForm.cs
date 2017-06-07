@@ -8,11 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using NisROM_Tuning_Suite.Controls;
+
 namespace NisROM_Tuning_Suite
 {
     public partial class Table2DForm : Form
     {
         private RomTable romTable;
+        
+        public StaticYAxisView TableView
+        {
+            get
+            {
+                return this.staticYAxisView1;
+            }
+        }
         
         public List<string> DataValues
         {

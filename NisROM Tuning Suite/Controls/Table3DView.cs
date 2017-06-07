@@ -17,6 +17,14 @@ namespace NisROM_Tuning_Suite.Controls
         private uint xAxisAddr;
         private uint yAxisAddr;
 
+        public DataGridView Grid
+        {
+            get
+            {
+                return this.dataGridView1;
+            }
+        }
+
         private List<Color> heatMapColors = new List<Color>
         {
             Color.Green,
@@ -245,6 +253,34 @@ namespace NisROM_Tuning_Suite.Controls
             double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
             double newValue = Convert.ToDouble(dataGridView1.CurrentCell.Value) + fineIncrement;
             dataGridView1.CurrentCell.Value = newValue;
+        }
+
+        public void IncrementCell(DataGridViewCell cell)
+        {
+            double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
+            double newValue = Convert.ToDouble(cell.Value) + fineIncrement;
+            cell.Value = newValue;
+        }
+
+        public void IncrementCellBig(DataGridViewCell cell)
+        {
+            double coarseIncrement = Convert.ToDouble(RomTable.Scaling.CoarseIncrement);
+            double newValue = Convert.ToDouble(cell.Value) + coarseIncrement;
+            cell.Value = newValue;
+        }
+
+        public void DecrementCellBig(DataGridViewCell cell)
+        {
+            double coarseIncrement = Convert.ToDouble(RomTable.Scaling.CoarseIncrement);
+            double newValue = Convert.ToDouble(cell.Value) - coarseIncrement;
+            cell.Value = newValue;
+        }
+
+        public void DecrementCell(DataGridViewCell cell)
+        {
+            double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
+            double newValue = Convert.ToDouble(cell.Value) - fineIncrement;
+            cell.Value = newValue;
         }
 
         private void DecrementCell()

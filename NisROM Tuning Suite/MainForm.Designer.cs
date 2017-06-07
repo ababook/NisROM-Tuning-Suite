@@ -38,10 +38,19 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.btnIncrement = new System.Windows.Forms.Button();
+            this.btnDecrement = new System.Windows.Forms.Button();
+            this.btnBigIncrement = new System.Windows.Forms.Button();
+            this.btnBigDecrement = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -70,21 +79,21 @@
             // loadROMToolStripMenuItem
             // 
             this.loadROMToolStripMenuItem.Name = "loadROMToolStripMenuItem";
-            this.loadROMToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.loadROMToolStripMenuItem.Size = new System.Drawing.Size(194, 30);
             this.loadROMToolStripMenuItem.Text = "Load ROM";
             this.loadROMToolStripMenuItem.Click += new System.EventHandler(this.loadROMToolStripMenuItem_Click);
             // 
             // saveROMToolStripMenuItem
             // 
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(194, 30);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveROMToolStripMenuItem_Click);
             // 
             // eCUDumpToolStripMenuItem
             // 
             this.eCUDumpToolStripMenuItem.Name = "eCUDumpToolStripMenuItem";
-            this.eCUDumpToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.eCUDumpToolStripMenuItem.Size = new System.Drawing.Size(194, 30);
             this.eCUDumpToolStripMenuItem.Text = "Dump/Flash";
             this.eCUDumpToolStripMenuItem.Click += new System.EventHandler(this.eCUDumpToolStripMenuItem_Click);
             // 
@@ -123,8 +132,9 @@
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(1713, 899);
-            this.splitContainer1.SplitterDistance = 491;
+            this.splitContainer1.SplitterDistance = 490;
             this.splitContainer1.TabIndex = 1;
             // 
             // treeView1
@@ -132,9 +142,79 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(491, 899);
+            this.treeView1.Size = new System.Drawing.Size(490, 899);
             this.treeView1.TabIndex = 0;
             this.treeView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDoubleClick);
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.btnBigDecrement);
+            this.splitContainer2.Panel1.Controls.Add(this.btnBigIncrement);
+            this.splitContainer2.Panel1.Controls.Add(this.btnDecrement);
+            this.splitContainer2.Panel1.Controls.Add(this.btnIncrement);
+            this.splitContainer2.Size = new System.Drawing.Size(1219, 899);
+            this.splitContainer2.SplitterDistance = 31;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // btnIncrement
+            // 
+            this.btnIncrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnIncrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnIncrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIncrement.Location = new System.Drawing.Point(0, 0);
+            this.btnIncrement.Name = "btnIncrement";
+            this.btnIncrement.Size = new System.Drawing.Size(58, 31);
+            this.btnIncrement.TabIndex = 0;
+            this.btnIncrement.Text = "+";
+            this.btnIncrement.UseVisualStyleBackColor = false;
+            this.btnIncrement.Click += new System.EventHandler(this.btnIncrement_Click);
+            // 
+            // btnDecrement
+            // 
+            this.btnDecrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnDecrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDecrement.Location = new System.Drawing.Point(58, 0);
+            this.btnDecrement.Name = "btnDecrement";
+            this.btnDecrement.Size = new System.Drawing.Size(58, 31);
+            this.btnDecrement.TabIndex = 1;
+            this.btnDecrement.Text = "-";
+            this.btnDecrement.UseVisualStyleBackColor = false;
+            this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
+            // 
+            // btnBigIncrement
+            // 
+            this.btnBigIncrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnBigIncrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnBigIncrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBigIncrement.Location = new System.Drawing.Point(116, 0);
+            this.btnBigIncrement.Name = "btnBigIncrement";
+            this.btnBigIncrement.Size = new System.Drawing.Size(58, 31);
+            this.btnBigIncrement.TabIndex = 2;
+            this.btnBigIncrement.Text = "++";
+            this.btnBigIncrement.UseVisualStyleBackColor = false;
+            this.btnBigIncrement.Click += new System.EventHandler(this.btnBigIncrement_Click);
+            // 
+            // btnBigDecrement
+            // 
+            this.btnBigDecrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnBigDecrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnBigDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBigDecrement.Location = new System.Drawing.Point(174, 0);
+            this.btnBigDecrement.Name = "btnBigDecrement";
+            this.btnBigDecrement.Size = new System.Drawing.Size(58, 31);
+            this.btnBigDecrement.TabIndex = 3;
+            this.btnBigDecrement.Text = "--";
+            this.btnBigDecrement.UseVisualStyleBackColor = false;
+            this.btnBigDecrement.Click += new System.EventHandler(this.btnBigDecrement_Click);
             // 
             // MainForm
             // 
@@ -149,8 +229,12 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,6 +252,11 @@
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ToolStripMenuItem eCUDumpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.Button btnDecrement;
+        private System.Windows.Forms.Button btnIncrement;
+        private System.Windows.Forms.Button btnBigDecrement;
+        private System.Windows.Forms.Button btnBigIncrement;
     }
 }
 

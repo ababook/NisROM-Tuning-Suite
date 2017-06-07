@@ -17,6 +17,21 @@ namespace NisROM_Tuning_Suite
 
         private Table3DView tableView;
 
+        public RomTable RomTable
+        {
+            get
+            {
+                return romTable;
+            }
+        }
+
+        public Table3DView TableView
+        {
+            get
+            {
+                return this.tableView;
+            }
+        }
         public Table3DForm()
         {
             InitializeComponent();

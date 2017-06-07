@@ -26,6 +26,10 @@ namespace NisROM_Tuning_Suite
             CenterToScreen();
             IsMdiContainer = true;
             LayoutMdi(MdiLayout.Cascade);
+            btnDecrement.Visible = false;
+            btnIncrement.Visible = false;
+            btnBigDecrement.Visible = false;
+            btnBigIncrement.Visible = false;
         }
 
         private void LoadTreeView(RomFile rom, RomDefinition definition)
@@ -105,6 +109,10 @@ namespace NisROM_Tuning_Suite
                             RomDefinition definition = new RomDefinition { FullDefinition = xDoc };
                             treeView1.Nodes.Clear();
                             LoadTreeView(loadedRom, definition);
+                            btnIncrement.Visible = true;
+                            btnDecrement.Visible = true;
+                            btnBigIncrement.Visible = true;
+                            btnBigDecrement.Visible = true;
                         }
                     }
                 }
@@ -210,13 +218,13 @@ namespace NisROM_Tuning_Suite
                 if (romTable.Name == "Fuel Injection Multiplier")
                 {
                     KMultiplierForm kForm = new KMultiplierForm(romTable) { MdiParent = this };
-                    splitContainer1.Panel2.Controls.Add(kForm);
+                    splitContainer2.Panel2.Controls.Add(kForm);
                     kForm.Show();
                 }
                 else
                 {
                     Table2DForm table2D = new Table2DForm(romTable) { MdiParent = this, Text = selectedTable.Text, DataValues = dataValues };
-                    splitContainer1.Panel2.Controls.Add(table2D);
+                    splitContainer2.Panel2.Controls.Add(table2D);
                     table2D.Show();
                 }
             }
@@ -224,7 +232,7 @@ namespace NisROM_Tuning_Suite
             {
                 romTable.SizeX = GetAttributeValue(table, "sizex");
                 Table3DForm table3D = new Table3DForm(romTable) { MdiParent = this, Text = selectedTable.Text };
-                splitContainer1.Panel2.Controls.Add(table3D);
+                splitContainer2.Panel2.Controls.Add(table3D);
                 table3D.Show();
             }
         }
@@ -247,6 +255,24 @@ namespace NisROM_Tuning_Suite
 
         private void saveROMToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            foreach(Control table in splitContainer2.Panel2.Controls)
+            {
+                if(table is Table3DForm)
+                {
+                    Table3DForm table3D = table as Table3DForm;
+                    table3D.TableView.SaveDataOnClose();
+                }
+                else if(table is Table2DForm)
+                {
+                    Table2DForm table2D = table as Table2DForm;
+                    table2D.TableView.SaveTableOnClose();
+                }
+                else if(table is KMultiplierForm)
+                {
+                    KMultiplierForm kForm = table as KMultiplierForm;
+                    kForm.KMultView.SaveValueOnClose();
+                }
+            }
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Save ROM...";
             sfd.Filter = "Binary File (*.bin)|*.bin";
@@ -257,6 +283,146 @@ namespace NisROM_Tuning_Suite
                 bw.Write(ecuRom.RomBytes);
                 bw.Close();
                 fs.Close();
+            }
+        }
+
+        private void btnIncrement_Click(object sender, EventArgs e)
+        {
+            foreach (Control table in splitContainer2.Panel2.Controls)
+            {
+                if(table is Table3DForm)
+                {
+                    Table3DForm topTable = table as Table3DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.IncrementCell(cell);
+                        }
+                    }
+                }
+                else if(table is Table2DForm)
+                {
+                    Table2DForm topTable = table as Table2DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.IncrementCell(cell);
+                        }
+                    }
+                }
+                else if (table is KMultiplierForm)
+                {
+                    KMultiplierForm topTable = table as KMultiplierForm;
+                    topTable.KMultView.IncrementCell();
+                }
+                break;
+            }
+        }
+
+        private void btnDecrement_Click(object sender, EventArgs e)
+        {
+            foreach (Control table in splitContainer2.Panel2.Controls)
+            {
+                if (table is Table3DForm)
+                {
+                    Table3DForm topTable = table as Table3DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.DecrementCell(cell);
+                        }
+                    }
+                }
+                else if(table is Table2DForm)
+                {
+                    Table2DForm topTable = table as Table2DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.DecrementCell(cell);
+                        }
+                    }
+                }
+                else if (table is KMultiplierForm)
+                {
+                    KMultiplierForm topTable = table as KMultiplierForm;
+                    topTable.KMultView.DecrementCell();
+                }
+                break;
+            }
+        }
+
+        private void btnBigIncrement_Click(object sender, EventArgs e)
+        {
+            foreach (Control table in splitContainer2.Panel2.Controls)
+            {
+                if (table is Table3DForm)
+                {
+                    Table3DForm topTable = table as Table3DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.IncrementCellBig(cell);
+                        }
+                    }
+                }
+                else if (table is Table2DForm)
+                {
+                    Table2DForm topTable = table as Table2DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.IncrementCellBig(cell);
+                        }
+                    }
+                }
+                else if (table is KMultiplierForm)
+                {
+                    KMultiplierForm topTable = table as KMultiplierForm;
+                    topTable.KMultView.IncrementCellBig();
+                }
+                break;
+            }
+        }
+
+        private void btnBigDecrement_Click(object sender, EventArgs e)
+        {
+            foreach (Control table in splitContainer2.Panel2.Controls)
+            {
+                if (table is Table3DForm)
+                {
+                    Table3DForm topTable = table as Table3DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.DecrementCellBig(cell);
+                        }
+                    }
+                }
+                else if(table is Table2DForm)
+                {
+                    Table2DForm topTable = table as Table2DForm;
+                    if (topTable.TableView.Grid.SelectedCells != null)
+                    {
+                        foreach (DataGridViewCell cell in topTable.TableView.Grid.SelectedCells)
+                        {
+                            topTable.TableView.DecrementCellBig(cell);
+                        }
+                    }
+                }
+                else if (table is KMultiplierForm)
+                {
+                    KMultiplierForm topTable = table as KMultiplierForm;
+                    topTable.KMultView.DecrementCellBig();
+                }
+                break;
             }
         }
     }

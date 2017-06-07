@@ -8,13 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using NisROM_Tuning_Suite.Controls;
+
 namespace NisROM_Tuning_Suite
 {
     public partial class KMultiplierForm : Form
     {
-
         private RomTable romTable;
 
+        public KMultiplierView KMultView
+        {
+            get
+            {
+                return this.kMultiplierView1;
+            }
+        }
+        
         public KMultiplierForm(RomTable romTable)
         {
             InitializeComponent();

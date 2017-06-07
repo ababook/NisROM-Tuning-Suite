@@ -25,6 +25,14 @@ namespace NisROM_Tuning_Suite.Controls
 
         public List<string> AxisValues { get; set; }
 
+        public DataGridView Grid
+        {
+            get
+            {
+                return this.dataGridView1;
+            }
+        }
+
         public StaticYAxisView()
         {
             InitializeComponent();
@@ -108,7 +116,35 @@ namespace NisROM_Tuning_Suite.Controls
                 }
             }
         }
-        
+
+        public void IncrementCell(DataGridViewCell cell)
+        {
+            double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
+            double newValue = Convert.ToDouble(cell.Value) + fineIncrement;
+            cell.Value = newValue;
+        }
+
+        public void DecrementCell(DataGridViewCell cell)
+        {
+            double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
+            double newValue = Convert.ToDouble(cell.Value) - fineIncrement;
+            cell.Value = newValue;
+        }
+
+        public void IncrementCellBig(DataGridViewCell cell)
+        {
+            double coarseIncrement = Convert.ToDouble(RomTable.Scaling.CoarseIncrement);
+            double newValue = Convert.ToDouble(cell.Value) + coarseIncrement;
+            cell.Value = newValue;
+        }
+
+        public void DecrementCellBig(DataGridViewCell cell)
+        {
+            double coarseIncrement = Convert.ToDouble(RomTable.Scaling.CoarseIncrement);
+            double newValue = Convert.ToDouble(cell.Value) - coarseIncrement;
+            cell.Value = newValue;
+        }
+
         private void StaticYAxisView_Load(object sender, EventArgs e)
         {
             SetTable();

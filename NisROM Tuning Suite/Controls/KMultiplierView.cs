@@ -31,6 +31,34 @@ namespace NisROM_Tuning_Suite.Controls
             InitializeComponent();
         }
 
+        public void IncrementCell()
+        {
+            double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
+            double newValue = Convert.ToDouble(textBox1.Text) + fineIncrement;
+            textBox1.Text = newValue.ToString();
+        }
+
+        public void DecrementCell()
+        {
+            double fineIncrement = Convert.ToDouble(RomTable.Scaling.FineIncrement);
+            double newValue = Convert.ToDouble(textBox1.Text) - fineIncrement;
+            textBox1.Text = newValue.ToString();
+        }
+
+        public void IncrementCellBig()
+        {
+            double coarseIncrement = Convert.ToDouble(RomTable.Scaling.CoarseIncrement);
+            double newValue = Convert.ToDouble(textBox1.Text) + coarseIncrement;
+            textBox1.Text = newValue.ToString();
+        }
+
+        public void DecrementCellBig()
+        {
+            double coarseIncrement = Convert.ToDouble(RomTable.Scaling.CoarseIncrement);
+            double newValue = Convert.ToDouble(textBox1.Text) - coarseIncrement;
+            textBox1.Text = newValue.ToString();
+        }
+
         public void SaveValueOnClose()
         {
             uint addr = Convert.ToUInt32(RomTable.StorageAddress, 16);
