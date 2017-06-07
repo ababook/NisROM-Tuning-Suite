@@ -112,6 +112,7 @@
     <Compile Include="RomTable.cs" />
     <Compile Include="RomTableAxis.cs" />
     <Compile Include="RomTableScaling.cs" />
+    <Compile Include="Serial\SerialManager.cs" />
     <Compile Include="Table2DForm.cs">
       <SubType>Form</SubType>
     </Compile>
