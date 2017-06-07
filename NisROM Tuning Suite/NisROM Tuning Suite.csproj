@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,6 +94,20 @@
     <Compile Include="FlashOptionsForm.Designer.cs">
       <DependentUpon>FlashOptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="J2534\ConfigParameter.cs" />
+    <Compile Include="J2534\IJ2354Extended.cs" />
+    <Compile Include="J2534\IJ2534.cs" />
+    <Compile Include="J2534\Ioctl.cs" />
+    <Compile Include="J2534\J2534.cs" />
+    <Compile Include="J2534\J2534Defs.cs" />
+    <Compile Include="J2534\J2534Detect.cs" />
+    <Compile Include="J2534\J2534Device.cs" />
+    <Compile Include="J2534\J2534DllWrapper.cs" />
+    <Compile Include="J2534\J2534Extended.cs" />
+    <Compile Include="J2534\PassThruMsg.cs" />
+    <Compile Include="J2534\SByteArray.cs" />
+    <Compile Include="J2534\SConfig.cs" />
+    <Compile Include="J2534\SConfigList.cs" />
     <Compile Include="KMultiplierForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +141,7 @@
       <DependentUpon>Table3DForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DataFunctions.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <EmbeddedResource Include="ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="J2534Logger\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
