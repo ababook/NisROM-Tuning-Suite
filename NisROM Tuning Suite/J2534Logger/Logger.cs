@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using RGiesecke.DllExport;
 using NisROM_Tuning_Suite.Utilities;
 using NisROM_Tuning_Suite.J2534;
 
