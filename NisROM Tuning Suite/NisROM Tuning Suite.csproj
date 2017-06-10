@@ -140,6 +140,12 @@
     <Compile Include="KMultiplierForm.Designer.cs">
       <DependentUpon>KMultiplierForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoggerForm.Designer.cs">
+      <DependentUpon>LoggerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="KMultiplierForm.resx">
       <DependentUpon>KMultiplierForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoggerForm.resx">
+      <DependentUpon>LoggerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

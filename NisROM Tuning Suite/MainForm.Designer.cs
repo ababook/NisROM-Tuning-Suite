@@ -39,10 +39,11 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.btnIncrement = new System.Windows.Forms.Button();
-            this.btnDecrement = new System.Windows.Forms.Button();
-            this.btnBigIncrement = new System.Windows.Forms.Button();
             this.btnBigDecrement = new System.Windows.Forms.Button();
+            this.btnBigIncrement = new System.Windows.Forms.Button();
+            this.btnDecrement = new System.Windows.Forms.Button();
+            this.btnIncrement = new System.Windows.Forms.Button();
+            this.loggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -71,7 +72,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadROMToolStripMenuItem,
             this.saveROMToolStripMenuItem,
-            this.eCUDumpToolStripMenuItem});
+            this.eCUDumpToolStripMenuItem,
+            this.loggerToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
             this.fileToolStripMenuItem.Text = "File";
@@ -79,21 +81,21 @@
             // loadROMToolStripMenuItem
             // 
             this.loadROMToolStripMenuItem.Name = "loadROMToolStripMenuItem";
-            this.loadROMToolStripMenuItem.Size = new System.Drawing.Size(194, 30);
+            this.loadROMToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.loadROMToolStripMenuItem.Text = "Load ROM";
             this.loadROMToolStripMenuItem.Click += new System.EventHandler(this.loadROMToolStripMenuItem_Click);
             // 
             // saveROMToolStripMenuItem
             // 
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(194, 30);
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveROMToolStripMenuItem_Click);
             // 
             // eCUDumpToolStripMenuItem
             // 
             this.eCUDumpToolStripMenuItem.Name = "eCUDumpToolStripMenuItem";
-            this.eCUDumpToolStripMenuItem.Size = new System.Drawing.Size(194, 30);
+            this.eCUDumpToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.eCUDumpToolStripMenuItem.Text = "Dump/Flash";
             this.eCUDumpToolStripMenuItem.Click += new System.EventHandler(this.eCUDumpToolStripMenuItem_Click);
             // 
@@ -164,31 +166,18 @@
             this.splitContainer2.SplitterDistance = 31;
             this.splitContainer2.TabIndex = 0;
             // 
-            // btnIncrement
+            // btnBigDecrement
             // 
-            this.btnIncrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
-            this.btnIncrement.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnIncrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIncrement.Location = new System.Drawing.Point(0, 0);
-            this.btnIncrement.Name = "btnIncrement";
-            this.btnIncrement.Size = new System.Drawing.Size(58, 31);
-            this.btnIncrement.TabIndex = 0;
-            this.btnIncrement.Text = "+";
-            this.btnIncrement.UseVisualStyleBackColor = false;
-            this.btnIncrement.Click += new System.EventHandler(this.btnIncrement_Click);
-            // 
-            // btnDecrement
-            // 
-            this.btnDecrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
-            this.btnDecrement.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDecrement.Location = new System.Drawing.Point(58, 0);
-            this.btnDecrement.Name = "btnDecrement";
-            this.btnDecrement.Size = new System.Drawing.Size(58, 31);
-            this.btnDecrement.TabIndex = 1;
-            this.btnDecrement.Text = "-";
-            this.btnDecrement.UseVisualStyleBackColor = false;
-            this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
+            this.btnBigDecrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnBigDecrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnBigDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBigDecrement.Location = new System.Drawing.Point(174, 0);
+            this.btnBigDecrement.Name = "btnBigDecrement";
+            this.btnBigDecrement.Size = new System.Drawing.Size(58, 31);
+            this.btnBigDecrement.TabIndex = 3;
+            this.btnBigDecrement.Text = "--";
+            this.btnBigDecrement.UseVisualStyleBackColor = false;
+            this.btnBigDecrement.Click += new System.EventHandler(this.btnBigDecrement_Click);
             // 
             // btnBigIncrement
             // 
@@ -203,18 +192,38 @@
             this.btnBigIncrement.UseVisualStyleBackColor = false;
             this.btnBigIncrement.Click += new System.EventHandler(this.btnBigIncrement_Click);
             // 
-            // btnBigDecrement
+            // btnDecrement
             // 
-            this.btnBigDecrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
-            this.btnBigDecrement.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnBigDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBigDecrement.Location = new System.Drawing.Point(174, 0);
-            this.btnBigDecrement.Name = "btnBigDecrement";
-            this.btnBigDecrement.Size = new System.Drawing.Size(58, 31);
-            this.btnBigDecrement.TabIndex = 3;
-            this.btnBigDecrement.Text = "--";
-            this.btnBigDecrement.UseVisualStyleBackColor = false;
-            this.btnBigDecrement.Click += new System.EventHandler(this.btnBigDecrement_Click);
+            this.btnDecrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnDecrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDecrement.Location = new System.Drawing.Point(58, 0);
+            this.btnDecrement.Name = "btnDecrement";
+            this.btnDecrement.Size = new System.Drawing.Size(58, 31);
+            this.btnDecrement.TabIndex = 1;
+            this.btnDecrement.Text = "-";
+            this.btnDecrement.UseVisualStyleBackColor = false;
+            this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
+            // 
+            // btnIncrement
+            // 
+            this.btnIncrement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
+            this.btnIncrement.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnIncrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIncrement.Location = new System.Drawing.Point(0, 0);
+            this.btnIncrement.Name = "btnIncrement";
+            this.btnIncrement.Size = new System.Drawing.Size(58, 31);
+            this.btnIncrement.TabIndex = 0;
+            this.btnIncrement.Text = "+";
+            this.btnIncrement.UseVisualStyleBackColor = false;
+            this.btnIncrement.Click += new System.EventHandler(this.btnIncrement_Click);
+            // 
+            // loggerToolStripMenuItem
+            // 
+            this.loggerToolStripMenuItem.Name = "loggerToolStripMenuItem";
+            this.loggerToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.loggerToolStripMenuItem.Text = "Logger";
+            this.loggerToolStripMenuItem.Click += new System.EventHandler(this.loggerToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -257,6 +266,7 @@
         private System.Windows.Forms.Button btnIncrement;
         private System.Windows.Forms.Button btnBigDecrement;
         private System.Windows.Forms.Button btnBigIncrement;
+        private System.Windows.Forms.ToolStripMenuItem loggerToolStripMenuItem;
     }
 }
 

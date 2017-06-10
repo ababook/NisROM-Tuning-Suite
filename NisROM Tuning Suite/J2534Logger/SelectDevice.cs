@@ -17,6 +17,7 @@ namespace NisROM_Tuning_Suite.J2534Logger
         public SelectDevice()
         {
             InitializeComponent();
+            CenterToScreen();
         }
 
         public J2534Device Device { get; set; }

@@ -8,7 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using System.Xml;
+
+using NisROM_Tuning_Suite.J2534;
+using NisROM_Tuning_Suite.J2534Logger;
+using NisROM_Tuning_Suite.Utilities;
 
 namespace NisROM_Tuning_Suite
 {
@@ -423,6 +428,56 @@ namespace NisROM_Tuning_Suite
                     topTable.KMultView.DecrementCellBig();
                 }
                 break;
+            }
+        }
+
+        private void loggerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            J2534Extended passThru = new J2534Extended();
+            List<J2534Device> availableDevices = J2534Detect.ListDevices();
+            J2534Device device;
+            SelectDevice selectDeviceForm = new SelectDevice();
+            if(selectDeviceForm.ShowDialog() == DialogResult.OK)
+            {
+                device = selectDeviceForm.Device;
+            }
+            else
+            {
+                return;
+            }
+            LoggerForm logger = new LoggerForm();
+            logger.Show();
+            passThru.LoadLibrary(device);
+            int deviceID = 0;
+            passThru.PassThruOpen(IntPtr.Zero, ref deviceID);
+            int channelID = 0;
+            passThru.PassThruConnect(deviceID, ProtocolID.ISO15765, ConnectFlag.NONE, BaudRate.ISO15765, ref channelID);
+            int filterID = 0;
+            PassThruMsg maskMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0xff, 0xff, 0xff, 0xff });
+            PassThruMsg patternMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, 0xE8 });
+            PassThruMsg flowMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, 0xE0 });
+            IntPtr maskMsgPtr = maskMsg.ToIntPtr();
+            IntPtr patternMsgPtr = patternMsg.ToIntPtr();
+            IntPtr flowControlMsgPtr = flowMsg.ToIntPtr();
+            passThru.PassThruStartMsgFilter(channelID, FilterType.FLOW_CONTROL_FILTER, maskMsgPtr, patternMsgPtr, flowControlMsgPtr, ref filterID);
+            passThru.ClearRxBuffer(channelID);
+            PassThruMsg txMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, 0xdf, 0x01, 0x00 });
+            var txMsgPtr = txMsg.ToIntPtr();
+            int numMsgs = 1;
+            passThru.PassThruWriteMsgs(channelID, txMsgPtr, ref numMsgs, 50);
+            numMsgs = 1;
+            IntPtr rxMsgs = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(PassThruMsg)) * numMsgs);
+            J2534Err status = J2534Err.STATUS_NOERROR;
+            while (J2534Err.STATUS_NOERROR == status)
+            {
+                status = passThru.PassThruReadMsgs(channelID, rxMsgs, ref numMsgs, 200);
+            }
+            if ((J2534Err.ERR_BUFFER_EMPTY == status || J2534Err.ERR_TIMEOUT == status) && numMsgs > 0)
+            {
+                foreach (PassThruMsg msg in rxMsgs.AsList<PassThruMsg>(numMsgs))
+                {
+                    logger.LoggerText = msg.ToString();
+                }
             }
         }
     }
