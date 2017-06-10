@@ -479,6 +479,8 @@ namespace NisROM_Tuning_Suite
                     logger.LoggerText = msg.ToString();
                 }
             }
+            passThru.PassThruDisconnect(channelID);
+            passThru.FreeLibrary();
         }
     }
 }
