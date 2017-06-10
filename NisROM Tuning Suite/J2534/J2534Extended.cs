@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NisROM_Tuning_Suite.J2534
 {
-    public class J2534Extended : J2534, IJ2354Extended
+    public class J2534Extended : J2534, IJ2534Extended
     {
         public J2534Err GetConfig(int channelId, ref List<SConfig> config)
         {

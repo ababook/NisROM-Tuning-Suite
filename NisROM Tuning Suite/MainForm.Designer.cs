@@ -44,6 +44,11 @@
             this.btnDecrement = new System.Windows.Forms.Button();
             this.btnIncrement = new System.Windows.Forms.Button();
             this.loggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cANOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cANDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkDTCsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearDTCsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eCUConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -60,7 +65,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.cANOptionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1713, 33);
@@ -73,7 +79,8 @@
             this.loadROMToolStripMenuItem,
             this.saveROMToolStripMenuItem,
             this.eCUDumpToolStripMenuItem,
-            this.loggerToolStripMenuItem});
+            this.loggerToolStripMenuItem,
+            this.eCUConnectToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
             this.fileToolStripMenuItem.Text = "File";
@@ -95,8 +102,8 @@
             // eCUDumpToolStripMenuItem
             // 
             this.eCUDumpToolStripMenuItem.Name = "eCUDumpToolStripMenuItem";
-            this.eCUDumpToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
-            this.eCUDumpToolStripMenuItem.Text = "Dump/Flash";
+            this.eCUDumpToolStripMenuItem.Size = new System.Drawing.Size(247, 30);
+            this.eCUDumpToolStripMenuItem.Text = "Dump/Flash K-Line";
             this.eCUDumpToolStripMenuItem.Click += new System.EventHandler(this.eCUDumpToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
@@ -225,6 +232,44 @@
             this.loggerToolStripMenuItem.Text = "Logger";
             this.loggerToolStripMenuItem.Click += new System.EventHandler(this.loggerToolStripMenuItem_Click);
             // 
+            // cANOptionsToolStripMenuItem
+            // 
+            this.cANOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cANDumpToolStripMenuItem,
+            this.checkDTCsToolStripMenuItem,
+            this.clearDTCsToolStripMenuItem});
+            this.cANOptionsToolStripMenuItem.Name = "cANOptionsToolStripMenuItem";
+            this.cANOptionsToolStripMenuItem.Size = new System.Drawing.Size(129, 29);
+            this.cANOptionsToolStripMenuItem.Text = "CAN Options";
+            // 
+            // cANDumpToolStripMenuItem
+            // 
+            this.cANDumpToolStripMenuItem.Name = "cANDumpToolStripMenuItem";
+            this.cANDumpToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.cANDumpToolStripMenuItem.Text = "CAN Dump";
+            this.cANDumpToolStripMenuItem.Click += new System.EventHandler(this.cANDumpToolStripMenuItem_Click);
+            // 
+            // checkDTCsToolStripMenuItem
+            // 
+            this.checkDTCsToolStripMenuItem.Name = "checkDTCsToolStripMenuItem";
+            this.checkDTCsToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.checkDTCsToolStripMenuItem.Text = "Check DTCs";
+            this.checkDTCsToolStripMenuItem.Click += new System.EventHandler(this.checkDTCsToolStripMenuItem_Click);
+            // 
+            // clearDTCsToolStripMenuItem
+            // 
+            this.clearDTCsToolStripMenuItem.Name = "clearDTCsToolStripMenuItem";
+            this.clearDTCsToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.clearDTCsToolStripMenuItem.Text = "Clear DTCs";
+            this.clearDTCsToolStripMenuItem.Click += new System.EventHandler(this.clearDTCsToolStripMenuItem_Click);
+            // 
+            // eCUConnectToolStripMenuItem
+            // 
+            this.eCUConnectToolStripMenuItem.Name = "eCUConnectToolStripMenuItem";
+            this.eCUConnectToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.eCUConnectToolStripMenuItem.Text = "ECU Connect";
+            this.eCUConnectToolStripMenuItem.Click += new System.EventHandler(this.eCUConnectToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -267,6 +312,11 @@
         private System.Windows.Forms.Button btnBigDecrement;
         private System.Windows.Forms.Button btnBigIncrement;
         private System.Windows.Forms.ToolStripMenuItem loggerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cANOptionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cANDumpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkDTCsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearDTCsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eCUConnectToolStripMenuItem;
     }
 }
 

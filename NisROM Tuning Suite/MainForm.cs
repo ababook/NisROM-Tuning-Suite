@@ -431,6 +431,10 @@ namespace NisROM_Tuning_Suite
             }
         }
 
+        private PassThruMsg SetTxMessage(byte[] message)
+        {
+            return new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, message);
+        }
         private void loggerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             J2534Extended passThru = new J2534Extended();
@@ -476,11 +480,90 @@ namespace NisROM_Tuning_Suite
             {
                 foreach (PassThruMsg msg in rxMsgs.AsList<PassThruMsg>(numMsgs))
                 {
-                    logger.LoggerText = msg.ToString();
+                    logger.LoggerText = msg.ToString(Environment.NewLine);
                 }
             }
             passThru.PassThruDisconnect(channelID);
             passThru.FreeLibrary();
+        }
+
+        private void cANDumpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "Bin File|*.bin"
+            };
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                CANDumpForm dumpForm = new CANDumpForm();
+                dumpForm.Show();
+                dumpForm.ProgressText = "Selecting J2534 Device...";
+                J2534Extended passThru = new J2534Extended();
+                List<J2534Device> availableDevices = J2534Detect.ListDevices();
+                J2534Device device;
+                SelectDevice selectDeviceForm = new SelectDevice();
+                if (selectDeviceForm.ShowDialog() == DialogResult.OK)
+                {
+                    device = selectDeviceForm.Device;
+                }
+                else
+                {
+                    dumpForm.Close();
+                    return;
+                }
+                passThru.LoadLibrary(device);
+                int deviceID = 0;
+                passThru.PassThruOpen(IntPtr.Zero, ref deviceID);
+                int channelID = 0;
+                passThru.PassThruConnect(deviceID, ProtocolID.ISO15765, ConnectFlag.NONE, BaudRate.ISO15765, ref channelID);
+                int filterID = 0;
+                PassThruMsg maskMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0xff, 0xff, 0xff, 0xff });
+                PassThruMsg patternMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, 0xE8 });
+                PassThruMsg flowMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, 0xE0 });
+                IntPtr maskMsgPtr = maskMsg.ToIntPtr();
+                IntPtr patternMsgPtr = patternMsg.ToIntPtr();
+                IntPtr flowControlMsgPtr = flowMsg.ToIntPtr();
+                passThru.PassThruStartMsgFilter(channelID, FilterType.FLOW_CONTROL_FILTER, maskMsgPtr, patternMsgPtr, flowControlMsgPtr, ref filterID);
+                passThru.ClearRxBuffer(channelID);
+                PassThruMsg txMsg = SetTxMessage(new byte[] { 0x00, 0x00, 0x07, 0xdf, 0x01, 0x00 });
+                var txMsgPtr = txMsg.ToIntPtr();
+                int numMsgs = 1;
+                passThru.PassThruWriteMsgs(channelID, txMsgPtr, ref numMsgs, 50);
+                numMsgs = 1;
+                IntPtr rxMsgs = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(PassThruMsg)) * numMsgs);
+
+                int increment = 0x3F;
+                uint romOffset = 0;
+                List<byte> romBytes = new List<byte>();
+                try
+                {
+                    while (true)
+                    {
+
+                    }
+                }
+                catch(Exception ex) { }
+                dumpForm.ProgressText = "Dump complete, saving ROM dump...";
+                byte[] rom = romBytes.ToArray();
+
+                passThru.PassThruDisconnect(channelID);
+                passThru.FreeLibrary();
+            }
+        }
+
+        private void checkDTCsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clearDTCsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eCUConnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace NisROM_Tuning_Suite
 {
-    public partial class LoggerForm : Form
+    public partial class CANDumpForm : Form
     {
-        public string LoggerText
+        public string ProgressText
         {
             get
             {
@@ -20,11 +20,23 @@ namespace NisROM_Tuning_Suite
             }
             set
             {
-                textBox1.Text = value;
+                textBox1.Text = value + Environment.NewLine;
             }
         }
 
-        public LoggerForm()
+        public string DumpPercent
+        {
+            get
+            {
+                return textBox1.Text;
+            }
+            set
+            {
+                textBox1.Text = value + "%";
+            }
+        }
+
+        public CANDumpForm()
         {
             InitializeComponent();
         }
