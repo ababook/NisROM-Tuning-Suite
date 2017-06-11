@@ -167,6 +167,12 @@
     <Compile Include="RomTableAxis.cs" />
     <Compile Include="RomTableScaling.cs" />
     <Compile Include="Serial\SerialManager.cs" />
+    <Compile Include="StatusMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatusMessageForm.Designer.cs">
+      <DependentUpon>StatusMessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Table2DForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,6 +235,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StatusMessageForm.resx">
+      <DependentUpon>StatusMessageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Table2DForm.resx">
       <DependentUpon>Table2DForm.cs</DependentUpon>
     </EmbeddedResource>

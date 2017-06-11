@@ -165,15 +165,7 @@ namespace NisROM_Tuning_Suite
                 PassThruMsg maskMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0xff, 0xff, 0xff, 0xff });
                 PassThruMsg patternMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, (byte)(0xE8 + i) });
                 PassThruMsg flowControlMsg = new PassThruMsg(ProtocolID.ISO15765, TxFlag.ISO15765_FRAME_PAD, new byte[] { 0x00, 0x00, 0x07, (byte)(0xE0 + i) });
-
-                m_status = m_j2534Interface.PassThruStartMsgFilter(
-                    m_channelId,
-                    FilterType.FLOW_CONTROL_FILTER,
-                    maskMsg.ToIntPtr(),
-                    patternMsg.ToIntPtr(),
-                    flowControlMsg.ToIntPtr(),
-                    ref filterId);
-
+                m_status = m_j2534Interface.PassThruStartMsgFilter(m_channelId, FilterType.FLOW_CONTROL_FILTER, maskMsg.ToIntPtr(), patternMsg.ToIntPtr(), flowControlMsg.ToIntPtr(), ref filterId);
                 if (J2534Err.STATUS_NOERROR != m_status)
                 {
                     m_j2534Interface.PassThruDisconnect(m_channelId);
@@ -204,11 +196,10 @@ namespace NisROM_Tuning_Suite
             return m_status;
         }
 
-        private bool ReadObdPid(byte mode, byte pid, ProtocolID protocolId, ref List<byte> value)
+        public bool ReadObdPid(byte mode, byte pid, ProtocolID protocolId, ref List<byte> value)
         {
             PassThruMsg txMsg = new PassThruMsg();
             int timeout;
-
             txMsg.ProtocolID = protocolId;
             switch (protocolId)
             {
@@ -257,7 +248,6 @@ namespace NisROM_Tuning_Suite
             {
                 if (numMsgs > 0)
                 {
-                    // Select the last value
                     PassThruMsg msg = rxMsgs.AsMsgList(numMsgs).Last();
                     value = msg.GetBytes().ToList();
                     value.RemoveRange(0, txMsg.GetBytes().Length);
@@ -266,6 +256,45 @@ namespace NisROM_Tuning_Suite
                 return false;
             }
             return false;
+        }
+
+        public List<byte> ReadBytesISO15765Packet(uint offset, byte length, ProtocolID protocolId)
+        {
+            List<byte> value = new List<byte>();
+            PassThruMsg txMsg = new PassThruMsg
+            {
+                ProtocolID = protocolId,
+                TxFlags = TxFlag.ISO15765_FRAME_PAD
+            };
+            byte[] buffer = new byte[] { 0x23, (byte)(offset >> 24), (byte)(offset >> 16), (byte)(offset >> 8), (byte)(offset), 0x00, length };
+            txMsg.SetBytes(buffer);
+            int timeout = 50;
+            m_j2534Interface.ClearRxBuffer(m_channelId);
+            int numMsgs = 1;
+            m_status = m_j2534Interface.PassThruWriteMsgs(m_channelId, txMsg.ToIntPtr(), ref numMsgs, timeout);
+            if (J2534Err.STATUS_NOERROR != m_status)
+            {
+                return null;
+            }
+            IntPtr rxMsgs = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(PassThruMsg)) * numMsgs);
+            numMsgs = 1;
+            while (J2534Err.STATUS_NOERROR == m_status)
+            {
+                m_status = m_j2534Interface.PassThruReadMsgs(m_channelId, rxMsgs, ref numMsgs, timeout * 4);
+            }
+
+            if (J2534Err.ERR_BUFFER_EMPTY == m_status || J2534Err.ERR_TIMEOUT == m_status)
+            {
+                if (numMsgs > 0)
+                {
+                    PassThruMsg msg = rxMsgs.AsMsgList(numMsgs).Last();
+                    value = msg.GetBytes().ToList();
+                    value.RemoveRange(0, txMsg.GetBytes().Length);
+                    return value;
+                }
+                return null;
+            }
+            return null;
         }
     }
 }
