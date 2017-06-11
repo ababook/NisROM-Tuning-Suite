@@ -296,5 +296,20 @@ namespace NisROM_Tuning_Suite
             }
             return null;
         }
+
+        public void SetCANSession(byte session)
+        {
+            PassThruMsg txMsg = new PassThruMsg
+            {
+                ProtocolID = ProtocolID.ISO15765,
+                TxFlags = TxFlag.ISO15765_FRAME_PAD
+            };
+            byte[] buffer = new byte[] { 0x10, session };
+            txMsg.SetBytes(buffer);
+            int timeout = 50;
+            m_j2534Interface.ClearRxBuffer(m_channelId);
+            int numMsgs = 1;
+            m_status = m_j2534Interface.PassThruWriteMsgs(m_channelId, txMsg.ToIntPtr(), ref numMsgs, timeout);
+        }
     }
 }

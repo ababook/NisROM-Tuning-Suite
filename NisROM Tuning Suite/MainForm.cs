@@ -513,6 +513,8 @@ namespace NisROM_Tuning_Suite
                 {
                     dumpForm.ProgressText = "Not connected";
                 }
+                dumpForm.ProgressText = "Setting CAN Session...";
+                comm.SetCANSession(0xFB);
                 const byte maxPacketSize = 0x3F;
                 uint romOffset = 0;
                 List<byte> romBytes = new List<byte>();
