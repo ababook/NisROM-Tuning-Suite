@@ -311,5 +311,25 @@ namespace NisROM_Tuning_Suite
             int numMsgs = 1;
             m_status = m_j2534Interface.PassThruWriteMsgs(m_channelId, txMsg.ToIntPtr(), ref numMsgs, timeout);
         }
+
+        public int GetRomSizeCAN()
+        {
+            SetCANSession(0xFB);
+            int romSize = 0x80000;
+            byte[] romCheck;
+            try
+            {
+                romCheck = ReadBytesISO15765Packet(0x80000, 16, ProtocolID.ISO15765).ToArray();
+                romSize = 0x100000;
+                romCheck = ReadBytesISO15765Packet(0x100000, 16, ProtocolID.ISO15765).ToArray();
+                romSize = 0x140000;
+                romCheck = ReadBytesISO15765Packet(0x140000, 16, ProtocolID.ISO15765).ToArray();
+                romSize = 0x180000;
+                romCheck = ReadBytesISO15765Packet(0x180000, 16, ProtocolID.ISO15765).ToArray();
+                romSize = 0x200000;
+            }
+            catch { }
+            return romSize;
+        }
     }
 }

@@ -515,6 +515,8 @@ namespace NisROM_Tuning_Suite
                 }
                 dumpForm.ProgressText = "Setting CAN Session...";
                 comm.SetCANSession(0xFB);
+                dumpForm.ProgressText = "Checking ECU ROM size...";
+                int romSize = comm.GetRomSizeCAN();
                 const byte maxPacketSize = 0x3F;
                 uint romOffset = 0;
                 List<byte> romBytes = new List<byte>();
@@ -533,6 +535,8 @@ namespace NisROM_Tuning_Suite
                         break;
                     }
                 }
+                buffer = comm.ReadBytesISO15765Packet(romOffset, (byte)(romSize - romOffset), ProtocolID.ISO15765).ToArray();
+                romBytes.AddRange(buffer);
                 dumpForm.ProgressText = "Dump complete, saving ROM dump...";
                 byte[] rom = romBytes.ToArray();
                 FileStream fs = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write);
