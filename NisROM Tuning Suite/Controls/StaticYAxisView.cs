@@ -36,6 +36,7 @@ namespace NisROM_Tuning_Suite.Controls
         public StaticYAxisView()
         {
             InitializeComponent();
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView_EditingControlShowing);
         }
 
         private void SetTable()
@@ -154,6 +155,31 @@ namespace NisROM_Tuning_Suite.Controls
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             LoadHeatMap();
+        }
+
+        private void dataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyDown += OnControlKeyDown;
+        }
+
+        private void OnControlKeyDown(object sender, KeyEventArgs e)
+        {
+            Grid.CurrentCell.ReadOnly = true;
+            if (e.KeyData == Keys.Oemplus || e.KeyData == Keys.Add)
+            {
+                foreach (DataGridViewCell cell in Grid.SelectedCells)
+                {
+                    IncrementCell(cell);
+                }
+            }
+            if (e.KeyData == Keys.OemMinus || e.KeyData == Keys.Subtract)
+            {
+                foreach (DataGridViewCell cell in Grid.SelectedCells)
+                {
+                    DecrementCell(cell);
+                }
+            }
+            Grid.CurrentCell.ReadOnly = false;
         }
     }
 }

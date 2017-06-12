@@ -33,6 +33,7 @@ namespace NisROM_Tuning_Suite.Controls
             Color.Orange,
             Color.Red
         };
+
         public string XAxisText
         {
             get
@@ -309,14 +310,22 @@ namespace NisROM_Tuning_Suite.Controls
 
         private void OnControlKeyDown(object sender, KeyEventArgs e)
         {
+            Grid.CurrentCell.ReadOnly = true;
             if (e.KeyData == Keys.Oemplus || e.KeyData == Keys.Add)
             {
-                IncrementCell();
+                foreach (DataGridViewCell cell in Grid.SelectedCells)
+                {
+                    IncrementCell(cell);
+                }
             }
             if (e.KeyData == Keys.OemMinus || e.KeyData == Keys.Subtract)
             {
-                DecrementCell();
+                foreach(DataGridViewCell cell in Grid.SelectedCells)
+                {
+                    DecrementCell(cell);
+                }
             }
+            Grid.CurrentCell.ReadOnly = false;
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
