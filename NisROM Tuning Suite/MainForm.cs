@@ -96,6 +96,47 @@ namespace NisROM_Tuning_Suite
             return node.Attributes[attribute].Value;
         }
         
+        private void FixChecksums(uint xorAddress, uint sumAddress)
+        {
+            uint sum = 0;
+            uint xor = 0;
+            int startOffset = 0;
+            bool hrStyle = false;
+            uint check1 = DataFunctions.GetUInt(ecuRom.RomBytes, 0x20008);
+            uint check2 = DataFunctions.GetUInt(ecuRom.RomBytes, 0x20010);
+            if ((ecuRom.RomBytes.Length == 0x100000) && (check1 == 0xFFFF7FFC) && (check2 == check1))
+            {
+                hrStyle = true;
+            }
+            if ((ecuRom.RomBytes.Length == 0x180000) && (check1 == 0xFFFF7FFC) && (check2 == check1))
+            {
+                hrStyle = true;
+            }
+            if (hrStyle)
+            {
+                startOffset = 0x8204;
+            }
+            for (int count = startOffset; count < ecuRom.RomBytes.Length; count += 4)
+            {
+                if (count == xorAddress) continue;
+                if (count == sumAddress) continue;
+                if ((count == 0x20000) && (hrStyle)) continue;
+                uint value = DataFunctions.GetUInt(ecuRom.RomBytes, count);
+                sum += value;
+                xor ^= value;
+            }
+            int offset = (int)sumAddress;
+            ecuRom.RomBytes[offset] = (byte)(sum >> 24);
+            ecuRom.RomBytes[offset + 1] = (byte)(sum >> 16);
+            ecuRom.RomBytes[offset + 2] = (byte)(sum >> 8);
+            ecuRom.RomBytes[offset + 3] = (byte)(sum);
+            offset = (int)xorAddress;
+            ecuRom.RomBytes[offset] = (byte)(xor >> 24);
+            ecuRom.RomBytes[offset + 1] = (byte)(xor >> 16);
+            ecuRom.RomBytes[offset + 2] = (byte)(xor >> 8);
+            ecuRom.RomBytes[offset + 3] = (byte)(xor);
+        }
+
         private void loadROMToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Select .bin file");
@@ -118,6 +159,7 @@ namespace NisROM_Tuning_Suite
                             btnDecrement.Visible = true;
                             btnBigIncrement.Visible = true;
                             btnBigDecrement.Visible = true;
+                            fixChecksumsToolStripMenuItem.Enabled = true;
                         }
                     }
                 }
@@ -570,6 +612,19 @@ namespace NisROM_Tuning_Suite
         private void eCUConnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void fixChecksumsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FixChecksums(Convert.ToUInt32(checksumXOR, 16), Convert.ToUInt32(checksumSum, 16));
+                MessageBox.Show("Checksums fixed.");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error fixing checksums. Error : " + ex.ToString());
+            }
         }
     }
 }
