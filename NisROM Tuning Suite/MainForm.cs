@@ -506,8 +506,16 @@ namespace NisROM_Tuning_Suite
                 if (!comm.DetectProtocol())
                 {
                     dumpForm.ProgressText = String.Format("Error connecting to device. Error: {0}", comm.GetLastError());
-                    comm.Disconnect();
-                    return;
+                    if (comm.Disconnect())
+                    {
+                        dumpForm.ProgressText = "Disconnected.";
+                        return;
+                    }
+                    else
+                    {
+                        dumpForm.ProgressText = "Disconnection failed!!!";
+                        return;
+                    }
                 }
                 if (!comm.IsConnected())
                 {
