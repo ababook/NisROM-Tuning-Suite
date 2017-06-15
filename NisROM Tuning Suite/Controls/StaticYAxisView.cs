@@ -58,7 +58,7 @@ namespace NisROM_Tuning_Suite.Controls
                 {
                     DataGridViewRow row = (DataGridViewRow)dataGridView1.RowTemplate.Clone();
                     row.CreateCells(dataGridView1, AxisValues[i], table[i]);
-                    row.Cells[0].Style.BackColor = Color.Green;
+                    row.Cells[0].Style.BackColor = Color.LightGray;
                     row.Cells[0].ReadOnly = true;
                     dataGridView1.Rows.Add(row);
                 }
@@ -74,7 +74,7 @@ namespace NisROM_Tuning_Suite.Controls
                 {
                     DataGridViewRow row = (DataGridViewRow)dataGridView1.RowTemplate.Clone();
                     row.CreateCells(dataGridView1, AxisValues[i], table[i]);
-                    row.Cells[0].Style.BackColor = Color.Green;
+                    row.Cells[0].Style.BackColor = Color.LightGray;
                     row.Cells[0].ReadOnly = true;
                     dataGridView1.Rows.Add(row);
                 }
