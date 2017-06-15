@@ -78,22 +78,25 @@ namespace NisROM_Tuning_Suite.Controls
             }
             YAxisText = RomTable.YAxis.Name;
             XAxisText = RomTable.XAxis.Name;
-            byte[] table = new byte[256];
-            byte[] xAx = new byte[16];
-            byte[] yAx = new byte[16];
+            ushort[] table = new ushort[256];
+            ushort[] xAx;
+            ushort[] yAx;
             tableAddr = Convert.ToUInt32(RomTable.StorageAddress, 16);
             xAxisAddr = Convert.ToUInt32(RomTable.XAxis.StorageAddress, 16);
             yAxisAddr = Convert.ToUInt32(RomTable.YAxis.StorageAddress, 16);
-            if (RomTable.StorageType == "uint8")
+            int j = 0;
+            if (RomTable.StorageType == "uint16")
             {
-                for (uint i = tableAddr; i < (tableAddr + 256); i++)
+                for (uint i = tableAddr; i < (tableAddr + 512); i+=2)
                 {
                     try
                     {
-                        table[i - tableAddr] = MainForm.ecuRom.RomBytes[i];
+                        table[j] = BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0);
                     }
                     catch { }
+                    j++;
                 }
+                
                 for(int i = 0; i < 16; i++)
                 {
                     DataGridViewRow row = (DataGridViewRow)dataGridView1.RowTemplate.Clone();
@@ -118,26 +121,44 @@ namespace NisROM_Tuning_Suite.Controls
                     dataGridView1.Rows.Add(row);
                 }
             }
-            if(RomTable.XAxis.StorageType == "uint8")
+            if(RomTable.XAxis.StorageType == "uint16")
             {
-                for(uint i = xAxisAddr; i < (xAxisAddr + 16); i++)
+                xAx = new ushort[16];
+                j = 0;
+                for(uint i = xAxisAddr; i < (xAxisAddr + 32); i+=2)
                 {
-                    xAx[i - xAxisAddr] = MainForm.ecuRom.RomBytes[i];
+                    xAx[j] = BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0);
+                    j++;
                 }
                 for(int i = 0; i < 16; i++)
                 {
                     dataGridView1.Columns[i].HeaderText = ConvertFromExpression(xAx[i], RomTable.XAxis.Scaling.Expression).ToString();
                 }
             }
-            if (RomTable.YAxis.StorageType == "uint8")
+            if (RomTable.YAxis.StorageType == "uint16")
             {
-                for (uint i = yAxisAddr; i < (yAxisAddr + 16); i++)
+                yAx = new ushort[16];
+                j = 0;
+                for (uint i = yAxisAddr; i < (yAxisAddr + 32); i+=2)
                 {
-                    yAx[i - yAxisAddr] = MainForm.ecuRom.RomBytes[i];
+                    yAx[j] = BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0);
+                    j++;
                 }
                 for (int i = 0; i < 16; i++)
                 {
                     dataGridView1.Rows[i].HeaderCell.Value = ConvertFromExpression(yAx[i], RomTable.YAxis.Scaling.Expression).ToString();
+                }
+            }
+            else
+            {
+                byte[] yAx8 = new byte[16];
+                for (uint i = yAxisAddr; i < (yAxisAddr + 16); i++)
+                {
+                    yAx8[i - yAxisAddr] = MainForm.ecuRom.RomBytes[i];
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    dataGridView1.Rows[i].HeaderCell.Value = ConvertFromExpression(yAx8[i], RomTable.YAxis.Scaling.Expression).ToString();
                 }
             }
         }
@@ -204,11 +225,26 @@ namespace NisROM_Tuning_Suite.Controls
             return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) <= 128 ? Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) : Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) - 128;
         }
 
+        private double ConvertFromExpression(ushort data, string expr)
+        {
+            DataTable dt = new DataTable();
+            expr = expr.Replace("x", Convert.ToString(data));
+            return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) <= 128 ? Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) : Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) - 128;
+        }
+
         private byte ConvertToRomByte(string data, string expr)
         {
             DataTable dt = new DataTable();
             expr = expr.Replace("x", data);
             return Convert.ToByte(dt.Compute(expr, String.Empty));
+        }
+
+        private byte[] ConvertToRomBytes(string data, string expr)
+        {
+            DataTable dt = new DataTable();
+            expr = expr.Replace("x", data);
+            ushort value = (ushort)(dt.Compute(expr, String.Empty));
+            return new byte[2] { (byte)(value >> 8), (byte)value };
         }
 
         public void SaveDataOnClose()
@@ -230,6 +266,7 @@ namespace NisROM_Tuning_Suite.Controls
                     MainForm.ecuRom.RomBytes[i] = table[i - tableAddr];
                 }
             }
+            /*
             else
             {
                 byte[] table = new byte[256];
@@ -247,6 +284,7 @@ namespace NisROM_Tuning_Suite.Controls
                     MainForm.ecuRom.RomBytes[i] = table[i - tableAddr];
                 }
             }
+            */
         }
 
         private void IncrementCell()
