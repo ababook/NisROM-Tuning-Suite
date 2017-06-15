@@ -268,6 +268,13 @@ namespace NisROM_Tuning_Suite
                     splitContainer2.Panel2.Controls.Add(kForm);
                     kForm.Show();
                 }
+                else if (romTable.Category == "Limiters")
+                {
+                    KMultiplierForm limiterForm = new KMultiplierForm(romTable) { MdiParent = this };
+                    limiterForm.KMultView.LimiterName = romTable.Name;
+                    splitContainer2.Panel2.Controls.Add(limiterForm);
+                    limiterForm.Show();
+                }
                 else
                 {
                     Table2DForm table2D = new Table2DForm(romTable) { MdiParent = this, Text = selectedTable.Text, DataValues = dataValues };

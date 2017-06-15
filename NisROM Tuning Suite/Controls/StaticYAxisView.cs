@@ -119,7 +119,7 @@ namespace NisROM_Tuning_Suite.Controls
                 {
                     ushort value = ConvertToUShort(row.Cells[1].Value.ToString(), RomTable.Scaling.To_Byte);
                     MainForm.ecuRom.RomBytes[tableAddr + i] = (byte)(value >> 8);
-                    MainForm.ecuRom.RomBytes[tableAddr + 1 + i] = (byte)value;
+                    MainForm.ecuRom.RomBytes[tableAddr + 1 + i] = (byte)(value);
                     i += 2;
                 }
             }
