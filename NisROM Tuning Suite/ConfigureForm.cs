@@ -70,7 +70,7 @@ namespace NisROM_Tuning_Suite
                 txtAddrType.Text = addrType[1];
                 string[] npConf = iniLines[11].Split(' ');
                 txtNpConf.Text = npConf[1] + " " + npConf[2];
-                string[] kernel = iniLines[12].Split(' ');
+                string[] kernel = iniLines[12].Replace("npk_", "").Split(' ');
                 kernelComboBox.Text = Path.GetFileNameWithoutExtension(kernel[1]);
             }
         }
