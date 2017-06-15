@@ -169,13 +169,13 @@ namespace NisROM_Tuning_Suite.Controls
             else
             {
                 byte[] Ax8 = new byte[16];
-                for (uint i = yAxisAddr; i < (yAxisAddr + 16); i++)
+                for (uint i = xAxisAddr; i < (xAxisAddr + 16); i++)
                 {
-                    Ax8[i - yAxisAddr] = MainForm.ecuRom.RomBytes[i];
+                    Ax8[i - xAxisAddr] = MainForm.ecuRom.RomBytes[i];
                 }
                 for (int i = 0; i < 16; i++)
                 {
-                    dataGridView1.Columns[i].HeaderText = ConvertFromExpression(Ax8[i], RomTable.YAxis.Scaling.Expression).ToString();
+                    dataGridView1.Columns[i].HeaderText = ConvertFromExpression(Ax8[i], RomTable.XAxis.Scaling.Expression).ToString();
                 }
             }
             if (RomTable.YAxis.StorageType == "uint16")
@@ -273,7 +273,14 @@ namespace NisROM_Tuning_Suite.Controls
         {
             DataTable dt = new DataTable();
             expr = expr.Replace("x", Convert.ToString(data));
-            return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) <= 128 ? Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) : Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) - 128;
+            if (RomTable.Name.Contains("Timing"))
+            {
+                return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) <= 128 ? Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) : Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2) - 128;
+            }
+            else
+            {
+                return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2);
+            }
         }
 
         private double ConvertFromExpression(ushort data, string expr)
