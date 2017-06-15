@@ -47,11 +47,11 @@ namespace NisROM_Tuning_Suite.Controls
             uint tableAddr = Convert.ToUInt32(RomTable.StorageAddress, 16);
             if (RomTable.StorageType == "uint16")
             {
-                ushort[] table = new ushort[tableSize];
+                double[] table = new double[tableSize];
                 uint j = tableAddr;
                 for (uint i = tableAddr; i < (tableAddr + (tableSize * 2)); i += 2)
                 {
-                    table[j - tableAddr] = (ushort)ConvertFromExpression(BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0), RomTable.Scaling.Expression);
+                    table[j - tableAddr] = ConvertFromExpression(BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0), RomTable.Scaling.Expression);
                     j++;
                 }
                 for (int i = 0; i < tableSize; i++)
