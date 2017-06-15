@@ -45,32 +45,91 @@ namespace NisROM_Tuning_Suite.Controls
             dataGridView1.Columns[1].HeaderText = RomTable.Name;
             int tableSize = AxisValues.Count();
             uint tableAddr = Convert.ToUInt32(RomTable.StorageAddress, 16);
-            ushort[] table = new ushort[tableSize];
-            uint j = tableAddr;
-            for(uint i = tableAddr; i < (tableAddr + (tableSize * 2)); i+=2)
+            if (RomTable.StorageType == "uint16")
             {
-                table[j - tableAddr] = BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0);
-                j++;
+                ushort[] table = new ushort[tableSize];
+                uint j = tableAddr;
+                for (uint i = tableAddr; i < (tableAddr + (tableSize * 2)); i += 2)
+                {
+                    table[j - tableAddr] = (ushort)ConvertFromExpression(BitConverter.ToUInt16(new byte[2] { MainForm.ecuRom.RomBytes[i + 1], MainForm.ecuRom.RomBytes[i] }, 0), RomTable.Scaling.Expression);
+                    j++;
+                }
+                for (int i = 0; i < tableSize; i++)
+                {
+                    DataGridViewRow row = (DataGridViewRow)dataGridView1.RowTemplate.Clone();
+                    row.CreateCells(dataGridView1, AxisValues[i], table[i]);
+                    row.Cells[0].Style.BackColor = Color.Green;
+                    row.Cells[0].ReadOnly = true;
+                    dataGridView1.Rows.Add(row);
+                }
             }
-            for(int i = 0; i < tableSize; i++)
+            else
             {
-                DataGridViewRow row = (DataGridViewRow)dataGridView1.RowTemplate.Clone();
-                row.CreateCells(dataGridView1, AxisValues[i], table[i]);
-                row.Cells[0].Style.BackColor = Color.Green;
-                row.Cells[0].ReadOnly = true;
-                dataGridView1.Rows.Add(row);
+                double[] table = new double[tableSize];
+                for (uint i = tableAddr; i < (tableAddr + tableSize); i++)
+                {
+                    table[i - tableAddr] = ConvertFromExpression(MainForm.ecuRom.RomBytes[i], RomTable.Scaling.Expression);
+                }
+                for (int i = 0; i < tableSize; i++)
+                {
+                    DataGridViewRow row = (DataGridViewRow)dataGridView1.RowTemplate.Clone();
+                    row.CreateCells(dataGridView1, AxisValues[i], table[i]);
+                    row.Cells[0].Style.BackColor = Color.Green;
+                    row.Cells[0].ReadOnly = true;
+                    dataGridView1.Rows.Add(row);
+                }
             }
+        }
+
+        private double ConvertFromExpression(byte data, string expr)
+        {
+            DataTable dt = new DataTable();
+            expr = expr.Replace("x", Convert.ToString(Convert.ToInt32(data)));
+            return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2);
+        }
+
+        private double ConvertFromExpression(ushort data, string expr)
+        {
+            DataTable dt = new DataTable();
+            expr = expr.Replace("x", Convert.ToString(data));
+            return Math.Round(Convert.ToDouble(dt.Compute(expr, String.Empty)), 2);
+        }
+
+        private byte ConvertToRomByte(string data, string expr)
+        {
+            DataTable dt = new DataTable();
+            expr = expr.Replace("x", data);
+            return Convert.ToByte(dt.Compute(expr, String.Empty));
+        }
+
+        private ushort ConvertToUShort(string data, string expr)
+        {
+            DataTable dt = new DataTable();
+            expr = expr.Replace("x", data);
+            return Convert.ToUInt16(dt.Compute(expr, String.Empty));
         }
 
         public void SaveTableOnClose()
         {
             uint tableAddr = Convert.ToUInt32(RomTable.StorageAddress, 16);
-            int i = 0;
-            foreach(DataGridViewRow row in dataGridView1.Rows)
+            uint i = 0;
+            if (RomTable.StorageType == "uint16")
             {
-                MainForm.ecuRom.RomBytes[tableAddr + i] = (byte)(Convert.ToUInt16(row.Cells[1].Value) >> 8);
-                MainForm.ecuRom.RomBytes[tableAddr + 1 + i] = (byte)(Convert.ToUInt16(row.Cells[1].Value));
-                i += 2;
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    ushort value = ConvertToUShort(row.Cells[1].Value.ToString(), RomTable.Scaling.To_Byte);
+                    MainForm.ecuRom.RomBytes[tableAddr + i] = (byte)(value >> 8);
+                    MainForm.ecuRom.RomBytes[tableAddr + 1 + i] = (byte)value;
+                    i += 2;
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    MainForm.ecuRom.RomBytes[tableAddr + i] = ConvertToRomByte(row.Cells[1].Value.ToString(), RomTable.Scaling.To_Byte);
+                    i++;
+                }
             }
         }
 
