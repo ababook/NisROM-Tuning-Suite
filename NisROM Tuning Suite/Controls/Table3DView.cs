@@ -27,10 +27,13 @@ namespace NisROM_Tuning_Suite.Controls
 
         private List<Color> heatMapColors = new List<Color>
         {
+            Color.DarkGreen,
             Color.Green,
             Color.LightGreen,
+            Color.LightYellow,
             Color.Yellow,
             Color.Orange,
+            Color.DarkOrange,
             Color.Red
         };
 
@@ -417,10 +420,13 @@ namespace NisROM_Tuning_Suite.Controls
             if (values.Count() == 0) return;
             double max = values.Max();
             double min = values.Min();
-            double i1 = max - ((max - min) / 5);
-            double i2 = max - (((max - min) / 5) * 2);
-            double i3 = max - (((max - min) / 5) * 3);
-            double i4 = max - (((max - min) / 5) * 4);
+            double i1 = max - ((max - min) / 8);
+            double i2 = max - (((max - min) / 8) * 2);
+            double i3 = max - (((max - min) / 8) * 3);
+            double i4 = max - (((max - min) / 8) * 4);
+            double i5 = max - (((max - min) / 8) * 5);
+            double i6 = max - (((max - min) / 8) * 6);
+            double i7 = max - (((max - min) / 8) * 7);
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
@@ -442,9 +448,21 @@ namespace NisROM_Tuning_Suite.Controls
                     {
                         cell.Style.BackColor = heatMapColors[3];
                     }
-                    else
+                    else if (value > i5 && value <= i4)
                     {
                         cell.Style.BackColor = heatMapColors[4];
+                    }
+                    else if (value > i6 && value <= i5)
+                    {
+                        cell.Style.BackColor = heatMapColors[5];
+                    }
+                    else if (value > i7 && value <= i6)
+                    {
+                        cell.Style.BackColor = heatMapColors[6];
+                    }
+                    else
+                    {
+                        cell.Style.BackColor = heatMapColors[7];
                     }
                 }
             }
