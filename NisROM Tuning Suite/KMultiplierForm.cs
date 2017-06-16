@@ -39,6 +39,7 @@ namespace NisROM_Tuning_Suite
         private void KMultiplierForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             kMultiplierView1.SaveValueOnClose();
+            MainForm.existingTables.Remove(this.Text);
         }
     }
 }

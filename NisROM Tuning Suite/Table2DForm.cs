@@ -41,6 +41,7 @@ namespace NisROM_Tuning_Suite
         private void Table2DForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             staticYAxisView1.SaveTableOnClose();
+            MainForm.existingTables.Remove(this.Text);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace NisROM_Tuning_Suite
     {
         public static RomDefinition romDefinition;
         private List<string> definitionCategories;
+        public static List<string> existingTables = new List<string>();
         public static RomFile ecuRom;
         public static string checksumXOR;
         public static string checksumSum;
@@ -189,6 +190,43 @@ namespace NisROM_Tuning_Suite
                 UserLevel = GetAttributeValue(table, "userlevel"),
                 StorageAddress = GetAttributeValue(table, "storageaddress")
             };
+            if (existingTables.Contains(romTable.Name))
+            {
+                foreach(Control ctrl in this.splitContainer2.Panel2.Controls)
+                {
+                    if(romTable.Type == "3D")
+                    {
+                        Table3DForm table3D = ctrl as Table3DForm;
+                        if(table3D.Text == romTable.Name)
+                        {
+                            table3D.Focus();
+                            break;
+                        }
+                    }
+                    if (romTable.Type == "2D")
+                    {
+                        if(ctrl is KMultiplierForm)
+                        {
+                            KMultiplierForm kForm = ctrl as KMultiplierForm;
+                            if (kForm.Text == romTable.Name)
+                            {
+                                kForm.Focus();
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Table2DForm table2D = ctrl as Table2DForm;
+                            if(table2D.Text == romTable.Name)
+                            {
+                                table2D.Focus();
+                                break;
+                            }
+                        }
+                    }
+                }
+                return;
+            }
             RomTableScaling scaling = new RomTableScaling();
             List<string> dataValues = new List<string>();
             foreach (XmlNode childNode in table)
@@ -289,6 +327,7 @@ namespace NisROM_Tuning_Suite
                 splitContainer2.Panel2.Controls.Add(table3D);
                 table3D.Show();
             }
+            existingTables.Add(romTable.Name);
         }
 
         private void eCUDumpToolStripMenuItem_Click(object sender, EventArgs e)
