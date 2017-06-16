@@ -199,7 +199,8 @@ namespace NisROM_Tuning_Suite
                         Table3DForm table3D = ctrl as Table3DForm;
                         if(table3D.Text == romTable.Name)
                         {
-                            table3D.Focus();
+                            table3D.Activate();
+                            table3D.BringToFront();
                             break;
                         }
                     }
@@ -210,7 +211,8 @@ namespace NisROM_Tuning_Suite
                             KMultiplierForm kForm = ctrl as KMultiplierForm;
                             if (kForm.Text == romTable.Name)
                             {
-                                kForm.Focus();
+                                kForm.Activate();
+                                kForm.BringToFront();
                                 break;
                             }
                         }
@@ -219,7 +221,8 @@ namespace NisROM_Tuning_Suite
                             Table2DForm table2D = ctrl as Table2DForm;
                             if(table2D.Text == romTable.Name)
                             {
-                                table2D.Focus();
+                                table2D.Activate();
+                                table2D.BringToFront();
                                 break;
                             }
                         }
@@ -305,6 +308,7 @@ namespace NisROM_Tuning_Suite
                     KMultiplierForm kForm = new KMultiplierForm(romTable) { MdiParent = this };
                     splitContainer2.Panel2.Controls.Add(kForm);
                     kForm.Show();
+                    kForm.BringToFront();
                 }
                 else if (romTable.Category == "Limiters")
                 {
@@ -312,12 +316,14 @@ namespace NisROM_Tuning_Suite
                     limiterForm.KMultView.LimiterName = romTable.Name;
                     splitContainer2.Panel2.Controls.Add(limiterForm);
                     limiterForm.Show();
+                    limiterForm.BringToFront();
                 }
                 else
                 {
                     Table2DForm table2D = new Table2DForm(romTable) { MdiParent = this, Text = selectedTable.Text, DataValues = dataValues };
                     splitContainer2.Panel2.Controls.Add(table2D);
                     table2D.Show();
+                    table2D.BringToFront();
                 }
             }
             if(romTable.Type == "3D")
@@ -326,6 +332,7 @@ namespace NisROM_Tuning_Suite
                 Table3DForm table3D = new Table3DForm(romTable) { MdiParent = this, Text = selectedTable.Text };
                 splitContainer2.Panel2.Controls.Add(table3D);
                 table3D.Show();
+                table3D.BringToFront();
             }
             existingTables.Add(romTable.Name);
         }
