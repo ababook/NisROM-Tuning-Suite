@@ -58,7 +58,14 @@ namespace NisROM_Tuning_Suite
 
         private void Table3DForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            tableView.SaveDataOnClose();
+            try
+            {
+                tableView.SaveDataOnClose();
+            }
+            catch
+            {
+                MessageBox.Show("Error saving table");
+            }
             MainForm.existingTables.Remove(this.Text);
         }
 

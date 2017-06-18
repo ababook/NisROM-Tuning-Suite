@@ -40,7 +40,14 @@ namespace NisROM_Tuning_Suite
 
         private void Table2DForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            staticYAxisView1.SaveTableOnClose();
+            try
+            {
+                staticYAxisView1.SaveTableOnClose();
+            }
+            catch
+            {
+                MessageBox.Show("Error Saving Table");
+            }
             MainForm.existingTables.Remove(this.Text);
         }
     }
