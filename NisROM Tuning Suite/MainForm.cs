@@ -14,17 +14,32 @@ using System.Xml;
 using NisROM_Tuning_Suite.J2534;
 using NisROM_Tuning_Suite.J2534Logger;
 using NisROM_Tuning_Suite.Utilities;
+using NisROM_Tuning_Suite.EcuLogging;
 
 namespace NisROM_Tuning_Suite
 {
     public partial class MainForm : Form
     {
+        private static bool ecuConnected = false;
         public static RomDefinition romDefinition;
         private List<string> definitionCategories;
         public static List<string> existingTables = new List<string>();
         public static RomFile ecuRom;
         public static string checksumXOR;
         public static string checksumSum;
+        private List<LogParameter> paramz = new List<LogParameter>();
+
+        public static bool EcuConnected
+        {
+            get
+            {
+                return ecuConnected;
+            }
+            set
+            {
+                ecuConnected = value;
+            }
+        }
 
         public MainForm()
         {
@@ -70,6 +85,10 @@ namespace NisROM_Tuning_Suite
                             if(category.Text == categoryType)
                             {
                                 category.Nodes.Add(new TreeNode(innerNode.Attributes["name"].Value));
+                                paramz.Add(new LogParameter
+                                {
+                                    ParamName = innerNode.Attributes["name"].Value,
+                                });
                             }
                         }
                     }
@@ -571,7 +590,7 @@ namespace NisROM_Tuning_Suite
             {
                 foreach (PassThruMsg msg in rxMsgs.AsList<PassThruMsg>(numMsgs))
                 {
-                    logger.LoggerText = msg.ToString(Environment.NewLine);
+                    //logger.LoggerText = msg.ToString(Environment.NewLine);
                 }
             }
             passThru.PassThruDisconnect(channelID);

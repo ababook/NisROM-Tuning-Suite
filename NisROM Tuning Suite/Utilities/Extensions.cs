@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using NisROM_Tuning_Suite.J2534;
+using System.Reflection;
 
 namespace NisROM_Tuning_Suite.Utilities
 {
@@ -68,6 +69,13 @@ namespace NisROM_Tuning_Suite.Utilities
                     (object) Environment.NewLine
                 }) + list[index].ToString() + (object)index + " -------------------------------";
             return str;
+        }
+
+        public static void DoubleBuffered(this System.Windows.Forms.DataGridView dgv, bool setting)
+        {
+            Type dgvType = dgv.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(dgv, setting, null);
         }
     }
 }

@@ -113,6 +113,12 @@
     <Compile Include="Controls\LimitersView.Designer.cs">
       <DependentUpon>LimitersView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LogView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LogView.Designer.cs">
+      <DependentUpon>LogView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StaticYAxisView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -137,6 +143,7 @@
     <Compile Include="DumpOrFlashForm.Designer.cs">
       <DependentUpon>DumpOrFlashForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EcuLogging\LogParameter.cs" />
     <Compile Include="FlashOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LimitersView.resx">
       <DependentUpon>LimitersView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LogView.resx">
+      <DependentUpon>LogView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StaticYAxisView.resx">
       <DependentUpon>StaticYAxisView.cs</DependentUpon>
